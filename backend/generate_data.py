@@ -58,7 +58,8 @@ def generate_car_data(num_samples=1000):
             'fuel_type': fuel_type,
             'transmission': transmission,
             'engine_size': engine_size,
-            'price': int(price)
+            'rent_price_day': int(price * 0.001) + random.randint(500, 1500), # Synthetic rental price
+            'leasing_price': int(price * 0.02) + random.randint(5000, 10000) # Synthetic leasing price
         })
         
     return pd.DataFrame(data)

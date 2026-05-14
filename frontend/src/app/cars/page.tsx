@@ -1,52 +1,15 @@
-'use client';
+import { Metadata } from 'next';
+import RentPageClient from './RentPageClient';
+import { Suspense } from 'react';
+export const metadata: Metadata = {
+    title: 'Rent a Car | DiarRentCar AI',
+    description: 'Find your perfect rental car from our premium fleet. Flexible terms and transparent pricing.',
+};
 
-import { useEffect, useState } from 'react';
-import { getCars, Car } from '@/utils/api';
-import styles from './page.module.css';
-
-export default function CarsPage() {
-    const [cars, setCars] = useState<Car[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function fetchCars() {
-            try {
-                const data = await getCars();
-                setCars(data);
-            } catch (error) {
-                console.error("Failed to fetch cars", error);
-            } finally {
-                setLoading(false);
-            }
-        }
-        fetchCars();
-    }, []);
-
-    if (loading) return <div className="container">Loading...</div>;
-
+export default function RentPage() {
     return (
-        <div className="container">
-            <h1 className={styles.title}>Available Cars</h1>
-            <div className={styles.grid}>
-                {cars.map((car) => (
-                    <div key={car.id} className={styles.card}>
-                        <div className={styles.imagePlaceholder}>
-                            {/* Image would go here */}
-                            <span>{car.make} {car.model}</span>
-                        </div>
-                        <div className={styles.content}>
-                            <h2>{car.year} {car.make} {car.model}</h2>
-                            <p className={styles.price}>${car.price} / day</p>
-                            <div className={styles.details}>
-                                <span>{car.mileage} miles</span>
-                                <span>{car.fuel_type}</span>
-                                <span>{car.transmission}</span>
-                            </div>
-                            <button className={styles.bookBtn}>Book Now</button>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </div>
+        <Suspense fallback={<div className="container" style={{ padding: '8rem 0', textAlign: 'center' }}><div className="loader"></div></div>}>
+            <RentPageClient />
+        </Suspense>
     );
 }

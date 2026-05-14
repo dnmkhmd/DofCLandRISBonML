@@ -1,0 +1,25 @@
+Photos for mercedes-e-class (6 variants, 18 total files):
+Variant 1:
+  - merc-e-1-exterior-1.jpg
+  - merc-e-1-exterior-2.jpg
+  - merc-e-1-interior.jpg
+Variant 2:
+  - merc-e-2-exterior-1.jpg
+  - merc-e-2-exterior-2.jpg
+  - merc-e-2-interior.jpg
+Variant 3:
+  - merc-e-3-exterior-1.jpg
+  - merc-e-3-exterior-2.jpg
+  - merc-e-3-interior.jpg
+Variant 4:
+  - merc-e-4-exterior-1.jpg
+  - merc-e-4-exterior-2.jpg
+  - merc-e-4-interior.jpg
+Variant 5:
+  - merc-e-5-exterior-1.jpg
+  - merc-e-5-exterior-2.jpg
+  - merc-e-5-interior.jpg
+Variant 6:
+  - merc-e-6-exterior-1.jpg
+  - merc-e-6-exterior-2.jpg
+  - merc-e-6-interior.jpg

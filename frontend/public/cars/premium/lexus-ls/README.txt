@@ -1,0 +1,25 @@
+Photos for lexus-ls (6 variants, 18 total files):
+Variant 1:
+  - lexus-ls-1-exterior-1.jpg
+  - lexus-ls-1-exterior-2.jpg
+  - lexus-ls-1-interior.jpg
+Variant 2:
+  - lexus-ls-2-exterior-1.jpg
+  - lexus-ls-2-exterior-2.jpg
+  - lexus-ls-2-interior.jpg
+Variant 3:
+  - lexus-ls-3-exterior-1.jpg
+  - lexus-ls-3-exterior-2.jpg
+  - lexus-ls-3-interior.jpg
+Variant 4:
+  - lexus-ls-4-exterior-1.jpg
+  - lexus-ls-4-exterior-2.jpg
+  - lexus-ls-4-interior.jpg
+Variant 5:
+  - lexus-ls-5-exterior-1.jpg
+  - lexus-ls-5-exterior-2.jpg
+  - lexus-ls-5-interior.jpg
+Variant 6:
+  - lexus-ls-6-exterior-1.jpg
+  - lexus-ls-6-exterior-2.jpg
+  - lexus-ls-6-interior.jpg

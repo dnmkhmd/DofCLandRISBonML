@@ -1,0 +1,25 @@
+Photos for volkswagen-passat (6 variants, 18 total files):
+Variant 1:
+  - passat-1-exterior-1.jpg
+  - passat-1-exterior-2.jpg
+  - passat-1-interior.jpg
+Variant 2:
+  - passat-2-exterior-1.jpg
+  - passat-2-exterior-2.jpg
+  - passat-2-interior.jpg
+Variant 3:
+  - passat-3-exterior-1.jpg
+  - passat-3-exterior-2.jpg
+  - passat-3-interior.jpg
+Variant 4:
+  - passat-4-exterior-1.jpg
+  - passat-4-exterior-2.jpg
+  - passat-4-interior.jpg
+Variant 5:
+  - passat-5-exterior-1.jpg
+  - passat-5-exterior-2.jpg
+  - passat-5-interior.jpg
+Variant 6:
+  - passat-6-exterior-1.jpg
+  - passat-6-exterior-2.jpg
+  - passat-6-interior.jpg

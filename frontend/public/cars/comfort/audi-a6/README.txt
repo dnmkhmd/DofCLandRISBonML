@@ -1,0 +1,25 @@
+Photos for audi-a6 (6 variants, 18 total files):
+Variant 1:
+  - audi-a6-1-exterior-1.jpg
+  - audi-a6-1-exterior-2.jpg
+  - audi-a6-1-interior.jpg
+Variant 2:
+  - audi-a6-2-exterior-1.jpg
+  - audi-a6-2-exterior-2.jpg
+  - audi-a6-2-interior.jpg
+Variant 3:
+  - audi-a6-3-exterior-1.jpg
+  - audi-a6-3-exterior-2.jpg
+  - audi-a6-3-interior.jpg
+Variant 4:
+  - audi-a6-4-exterior-1.jpg
+  - audi-a6-4-exterior-2.jpg
+  - audi-a6-4-interior.jpg
+Variant 5:
+  - audi-a6-5-exterior-1.jpg
+  - audi-a6-5-exterior-2.jpg
+  - audi-a6-5-interior.jpg
+Variant 6:
+  - audi-a6-6-exterior-1.jpg
+  - audi-a6-6-exterior-2.jpg
+  - audi-a6-6-interior.jpg

@@ -1,0 +1,25 @@
+Photos for hyundai-sonata (6 variants, 18 total files):
+Variant 1:
+  - sonata-1-exterior-1.jpg
+  - sonata-1-exterior-2.jpg
+  - sonata-1-interior.jpg
+Variant 2:
+  - sonata-2-exterior-1.jpg
+  - sonata-2-exterior-2.jpg
+  - sonata-2-interior.jpg
+Variant 3:
+  - sonata-3-exterior-1.jpg
+  - sonata-3-exterior-2.jpg
+  - sonata-3-interior.jpg
+Variant 4:
+  - sonata-4-exterior-1.jpg
+  - sonata-4-exterior-2.jpg
+  - sonata-4-interior.jpg
+Variant 5:
+  - sonata-5-exterior-1.jpg
+  - sonata-5-exterior-2.jpg
+  - sonata-5-interior.jpg
+Variant 6:
+  - sonata-6-exterior-1.jpg
+  - sonata-6-exterior-2.jpg
+  - sonata-6-interior.jpg

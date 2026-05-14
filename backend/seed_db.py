@@ -37,6 +37,14 @@ def seed_data():
                 is_available=True
             )
             db.add(car)
+            db.flush() # To get the ID
+            
+            # Add a placeholder image
+            img = models.CarImage(
+                car_id=car.id,
+                url='https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=800'
+            )
+            db.add(img)
         
         db.commit()
         print("Database seeded successfully with 50 cars.")

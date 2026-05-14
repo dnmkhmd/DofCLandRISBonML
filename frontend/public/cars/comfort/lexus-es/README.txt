@@ -1,0 +1,25 @@
+Photos for lexus-es (6 variants, 18 total files):
+Variant 1:
+  - lexus-es-1-exterior-1.jpg
+  - lexus-es-1-exterior-2.jpg
+  - lexus-es-1-interior.jpg
+Variant 2:
+  - lexus-es-2-exterior-1.jpg
+  - lexus-es-2-exterior-2.jpg
+  - lexus-es-2-interior.jpg
+Variant 3:
+  - lexus-es-3-exterior-1.jpg
+  - lexus-es-3-exterior-2.jpg
+  - lexus-es-3-interior.jpg
+Variant 4:
+  - lexus-es-4-exterior-1.jpg
+  - lexus-es-4-exterior-2.jpg
+  - lexus-es-4-interior.jpg
+Variant 5:
+  - lexus-es-5-exterior-1.jpg
+  - lexus-es-5-exterior-2.jpg
+  - lexus-es-5-interior.jpg
+Variant 6:
+  - lexus-es-6-exterior-1.jpg
+  - lexus-es-6-exterior-2.jpg
+  - lexus-es-6-interior.jpg

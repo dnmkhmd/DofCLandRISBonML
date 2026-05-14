@@ -27,21 +27,26 @@ def test_predict_price():
 
 def test_create_car():
     payload = {
-        "make": "Honda",
+        "brand": "Honda",
         "model": "Civic",
         "year": 2022,
-        "mileage": 10000,
-        "price": 25000,
+        "engine_volume": 2.0,
+        "power": 150,
         "fuel_type": "Gasoline",
         "transmission": "Automatic",
-        "engine_size": 2.0,
-        "description": "Clean car",
+        "drive": "FWD",
+        "seats": 5,
+        "body_type": "Sedan",
+        "color": "Black",
+        "rent_price_day": 50.0,
+        "rent_price_month": 1200.0,
+        "leasing_price": 400.0,
         "is_available": True
     }
     response = client.post("/cars/", json=payload)
     assert response.status_code == 200
     data = response.json()
-    assert data["make"] == "Honda"
+    assert data["brand"] == "Honda"
     assert "id" in data
 
 def test_read_cars():

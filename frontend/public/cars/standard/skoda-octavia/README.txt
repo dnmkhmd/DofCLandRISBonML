@@ -1,0 +1,25 @@
+Photos for skoda-octavia (6 variants, 18 total files):
+Variant 1:
+  - octavia-1-exterior-1.jpg
+  - octavia-1-exterior-2.jpg
+  - octavia-1-interior.jpg
+Variant 2:
+  - octavia-2-exterior-1.jpg
+  - octavia-2-exterior-2.jpg
+  - octavia-2-interior.jpg
+Variant 3:
+  - octavia-3-exterior-1.jpg
+  - octavia-3-exterior-2.jpg
+  - octavia-3-interior.jpg
+Variant 4:
+  - octavia-4-exterior-1.jpg
+  - octavia-4-exterior-2.jpg
+  - octavia-4-interior.jpg
+Variant 5:
+  - octavia-5-exterior-1.jpg
+  - octavia-5-exterior-2.jpg
+  - octavia-5-interior.jpg
+Variant 6:
+  - octavia-6-exterior-1.jpg
+  - octavia-6-exterior-2.jpg
+  - octavia-6-interior.jpg

@@ -1,0 +1,25 @@
+Photos for range-rover-vogue (6 variants, 18 total files):
+Variant 1:
+  - rr-vogue-1-exterior-1.jpg
+  - rr-vogue-1-exterior-2.jpg
+  - rr-vogue-1-interior.jpg
+Variant 2:
+  - rr-vogue-2-exterior-1.jpg
+  - rr-vogue-2-exterior-2.jpg
+  - rr-vogue-2-interior.jpg
+Variant 3:
+  - rr-vogue-3-exterior-1.jpg
+  - rr-vogue-3-exterior-2.jpg
+  - rr-vogue-3-interior.jpg
+Variant 4:
+  - rr-vogue-4-exterior-1.jpg
+  - rr-vogue-4-exterior-2.jpg
+  - rr-vogue-4-interior.jpg
+Variant 5:
+  - rr-vogue-5-exterior-1.jpg
+  - rr-vogue-5-exterior-2.jpg
+  - rr-vogue-5-interior.jpg
+Variant 6:
+  - rr-vogue-6-exterior-1.jpg
+  - rr-vogue-6-exterior-2.jpg
+  - rr-vogue-6-interior.jpg

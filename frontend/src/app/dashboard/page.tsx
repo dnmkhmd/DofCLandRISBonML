@@ -1,283 +1,254 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
-import { useRouter } from 'next/navigation';
+import { useTranslation } from '@/context/LanguageContext';
+import { useCurrency } from '@/context/CurrencyContext';
 import api from '@/utils/api';
-import Cookies from 'js-cookie';
-import { User, Calendar, CreditCard, Heart, Settings, LogOut } from 'lucide-react';
 import Button from '@/components/ui/Button';
+import { Car, ShoppingBag, User, Settings, LogOut, AlertTriangle } from 'lucide-react';
+import styles from './page.module.css';
 
 export default function DashboardPage() {
-    const { user, token, logout, updateUser, loading } = useAuth();
+    const { user, logout } = useAuth();
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState('profile');
-
-    useEffect(() => {
-        if (!loading && !user) {
-            router.push('/login');
-        }
-    }, [user, loading, router]);
-
-    if (loading || !user) return <div className="container" style={{ padding: '4rem', textAlign: 'center' }}>Loading dashboard...</div>;
-
-    const renderContent = () => {
-        switch (activeTab) {
-            case 'profile': return <ProfileSection user={user} token={token!} updateUser={updateUser} />;
-            case 'bookings': return <BookingsSection token={token!} />;
-            case 'leasing': return <LeasingSection token={token!} />;
-            case 'favorites': return <FavoritesSection token={token!} />;
-            case 'settings': return <SettingsSection />;
-            default: return null;
-        }
-    };
-
-    return (
-        <div className="container" style={{ padding: '3rem 0', display: 'flex', gap: '2rem', minHeight: '80vh' }}>
-            {/* Sidebar */}
-            <div style={{ width: '250px', flexShrink: 0, borderRight: '1px solid hsl(var(--border))', paddingRight: '1rem' }}>
-                <div style={{ padding: '1rem', borderBottom: '1px solid hsl(var(--border))', marginBottom: '1rem' }}>
-                    <div style={{ fontWeight: 600, fontSize: '1.125rem' }}>{user.full_name || 'My Account'}</div>
-                    <div style={{ fontSize: '0.875rem', color: 'hsl(var(--muted-foreground))' }}>{user.email}</div>
-                </div>
-                <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                    <TabButton icon={<User size={18} />} label="Profile" active={activeTab === 'profile'} onClick={() => setActiveTab('profile')} />
-                    <TabButton icon={<Calendar size={18} />} label="My Bookings" active={activeTab === 'bookings'} onClick={() => setActiveTab('bookings')} />
-                    <TabButton icon={<CreditCard size={18} />} label="My Leasing" active={activeTab === 'leasing'} onClick={() => setActiveTab('leasing')} />
-                    <TabButton icon={<Heart size={18} />} label="Favorites" active={activeTab === 'favorites'} onClick={() => setActiveTab('favorites')} />
-                    <TabButton icon={<Settings size={18} />} label="Settings" active={activeTab === 'settings'} onClick={() => setActiveTab('settings')} />
-                    <div style={{ marginTop: '2rem' }}>
-                        <button onClick={() => { logout(); router.push('/'); }} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', width: '100%', borderRadius: '8px', border: 'none', background: 'transparent', color: 'hsl(var(--destructive))', cursor: 'pointer', textAlign: 'left' }}>
-                            <LogOut size={18} /> Logout
-                        </button>
-                    </div>
-                </nav>
-            </div>
-            {/* Main Content */}
-            <div style={{ flex: 1, padding: '1rem' }}>
-                {renderContent()}
-            </div>
-        </div>
-    );
-}
-
-function TabButton({ icon, label, active, onClick }: { icon: React.ReactNode, label: string, active: boolean, onClick: () => void }) {
-    return (
-        <button 
-            onClick={onClick}
-            style={{
-                display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem 1rem', width: '100%',
-                borderRadius: '8px', border: 'none', cursor: 'pointer', textAlign: 'left',
-                background: active ? 'hsl(var(--muted))' : 'transparent',
-                color: active ? 'hsl(var(--foreground))' : 'hsl(var(--muted-foreground))',
-                fontWeight: active ? 600 : 400
-            }}
-        >
-            {icon} {label}
-        </button>
-    );
-}
-
-function ProfileSection({ user, token, updateUser }: { user: any, token: string, updateUser: any }) {
-    const [fullName, setFullName] = useState(user.full_name || '');
-    const [phone, setPhone] = useState(user.phone || '');
-    const [password, setPassword] = useState('');
-    const [msg, setMsg] = useState('');
-
-    const handleSave = async (e: any) => {
-        e.preventDefault();
-        try {
-            const data: any = { full_name: fullName, phone };
-            if (password) data.password = password;
-            const res = await api.put('/auth/me', data);
-            updateUser(res.data);
-            setMsg('Profile updated successfully!');
-            setPassword('');
-        } catch (err: any) {
-            setMsg('Failed to update profile.');
-        }
-    };
-
-    return (
-        <div>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Profile Summary</h2>
-            {msg && <div style={{ marginBottom: '1rem', color: msg.includes('success') ? 'green' : 'red' }}>{msg}</div>}
-            <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '400px' }}>
-                <label style={{ fontSize: '0.875rem', fontWeight: 500 }}>Full Name</label>
-                <input type="text" value={fullName} onChange={e => setFullName(e.target.value)} style={inputStyle} />
-                
-                <label style={{ fontSize: '0.875rem', fontWeight: 500 }}>Email Address (Read Only)</label>
-                <input type="email" value={user.email} disabled style={{ ...inputStyle, opacity: 0.7 }} />
-                
-                <label style={{ fontSize: '0.875rem', fontWeight: 500 }}>Phone Number</label>
-                <input type="text" value={phone} onChange={e => setPhone(e.target.value)} style={inputStyle} />
-                
-                <h3 style={{ fontSize: '1.25rem', marginTop: '1.5rem', marginBottom: '0.5rem' }}>Change Password</h3>
-                <label style={{ fontSize: '0.875rem', fontWeight: 500 }}>New Password</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="Leave blank to keep current" style={inputStyle} />
-                
-                <Button type="submit" style={{ marginTop: '1rem' }}>Save Changes</Button>
-            </form>
-        </div>
-    );
-}
-
-function BookingsSection({ token }: { token: string }) {
+    const searchParams = useSearchParams();
+    const { t, language, setLanguage } = useTranslation();
+    const { currency, setCurrency, formatPrice, getCurrencySymbol } = useCurrency();
+    
+    const [activeTab, setActiveTab] = useState(searchParams?.get('tab') || 'history');
     const [bookings, setBookings] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        api.get('/bookings/my')
-            .then(res => setBookings(res.data))
-            .finally(() => setLoading(false));
-    }, [token]);
+    const [profileData, setProfileData] = useState({
+        fullName: user?.full_name || '',
+        email: user?.email || '',
+        phone: user?.phone || ''
+    });
 
-    const handleCancel = async (id: number) => {
-        if (!confirm('Are you sure you want to cancel this booking?')) return;
-        try {
-            await api.delete(`/bookings/${id}`);
-            setBookings(bookings.map(b => b.id === id ? { ...b, status: 'Cancelled' } : b));
-        } catch (err) {
-            alert('Failed to cancel booking.');
+    useEffect(() => {
+        if (!user) {
+            router.push('/login');
+            return;
+        }
+
+        const fetchBookings = async () => {
+            try {
+                const res = await api.get(`/bookings/${user.id}`);
+                setBookings(res.data.bookings || []);
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchBookings();
+    }, [user, router]);
+
+    if (!user) return null;
+
+    const handleLogout = () => {
+        logout();
+        router.push('/');
+    };
+
+    const handleDeleteAccount = () => {
+        if (confirm(t('dashboard.delete') + '?')) {
+            logout();
+            router.push('/');
         }
     };
 
-    if (loading) return <div>Loading bookings...</div>;
-    if (bookings.length === 0) return <div>No bookings found.</div>;
+    const handleCancel = async (bookingId: number) => {
+        if (confirm('Cancel this booking?')) {
+            try {
+                await api.put(`/bookings/${user.id}/${bookingId}/cancel`);
+                setBookings(prev => prev.map(b => b.id === bookingId ? { ...b, status: 'cancelled' } : b));
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    };
 
     return (
-        <div>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>My Bookings</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {bookings.map(b => (
-                    <div key={b.id} style={{ border: '1px solid hsl(var(--border))', borderRadius: '8px', padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className={styles.page}>
+            <div className={styles.container}>
+                <div className={styles.header}>
+                    <div className={styles.avatar}>
+                        {user.full_name?.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                        <h1 className={styles.greeting}>
+                            {t('dashboard.greeting')}, {user.full_name}!
+                        </h1>
+                        <p className={styles.email}>{user.email}</p>
+                        <span className={styles.roleBadge}>
+                            {user.role === 'admin' ? 'Администратор' : 'Пользователь'}
+                        </span>
+                    </div>
+                </div>
+
+                <div className={styles.tabs}>
+                    <button 
+                        className={`${styles.tab} ${activeTab === 'history' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('history')}
+                    >
+                        <ShoppingBag className="w-4 h-4 mr-2" />
+                        {t('dashboard.tab.history')}
+                    </button>
+                    <button 
+                        className={`${styles.tab} ${activeTab === 'profile' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('profile')}
+                    >
+                        <User className="w-4 h-4 mr-2" />
+                        {t('dashboard.tab.profile')}
+                    </button>
+                    <button 
+                        className={`${styles.tab} ${activeTab === 'settings' ? styles.activeTab : ''}`}
+                        onClick={() => setActiveTab('settings')}
+                    >
+                        <Settings className="w-4 h-4 mr-2" />
+                        {t('dashboard.tab.settings')}
+                    </button>
+                </div>
+
+                <div className={styles.content}>
+                    {activeTab === 'history' && (
                         <div>
-                            <div style={{ fontWeight: 600 }}>Car ID: {b.car_id}</div>
-                            <div style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.875rem' }}>
-                                {new Date(b.start_date).toLocaleDateString()} - {new Date(b.end_date).toLocaleDateString()}
-                            </div>
-                            <div style={{ marginTop: '0.5rem', fontWeight: 600 }}>Total: ${b.total_price}</div>
-                        </div>
-                        <div style={{ textAlign: 'right' }}>
-                            <div style={{ marginBottom: '0.5rem', color: b.status === 'Active' ? 'green' : (b.status === 'Cancelled' ? 'red' : 'inherit') }}>
-                                {b.status}
-                            </div>
-                            {b.status === 'Active' && (
-                                <Button variant="outline" size="sm" onClick={() => handleCancel(b.id)}>Cancel</Button>
+                            <h2 className={styles.sectionTitle}>{t('dashboard.tab.history')}</h2>
+                            
+                            {loading ? (
+                                <p>Loading...</p>
+                            ) : bookings.length === 0 ? (
+                                <div className={styles.emptyState}>
+                                    <Car className="w-12 h-12 mb-4 text-slate-500" />
+                                    <p>{t('dashboard.empty')}</p>
+                                    <Button onClick={() => router.push('/cars')} className="mt-4">
+                                        {t('dashboard.empty.btn')}
+                                    </Button>
+                                </div>
+                            ) : (
+                                <div className={styles.bookingList}>
+                                    {bookings.map(b => (
+                                        <div key={b.id} className={styles.bookingCard}>
+                                            <div className={styles.bookingImage}>
+                                                <img src={b.car_photo || "/placeholder-car.jpg"} alt={b.car_brand} />
+                                            </div>
+                                            <div className={styles.bookingDetails}>
+                                                <h3>{b.car_brand} {b.car_model}</h3>
+                                                <p className={styles.bookingDate}>
+                                                    {b.start_date} — {b.end_date}
+                                                </p>
+                                                <div className={styles.badges}>
+                                                    <span className={b.booking_type === 'rent' ? styles.badgeRent : styles.badgeLease}>
+                                                        {t(`dashboard.type.${b.booking_type}`)}
+                                                    </span>
+                                                    <span className={`${styles.badgeStatus} ${styles[`status_${b.status}`]}`}>
+                                                        {t(`dashboard.status.${b.status}`)}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className={styles.bookingPrice}>
+                                                <p className={styles.price}>{getCurrencySymbol()}{b.total_price}</p>
+                                                {b.status === 'active' && (
+                                                    <Button variant="ghost" size="sm" onClick={() => handleCancel(b.id)}>
+                                                        Отменить
+                                                    </Button>
+                                                )}
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             )}
                         </div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
+                    )}
 
-function LeasingSection({ token }: { token: string }) {
-    const [apps, setApps] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        api.get('/leasing/my')
-            .then(res => setApps(res.data))
-            .finally(() => setLoading(false));
-    }, [token]);
-
-    if (loading) return <div>Loading applications...</div>;
-    if (apps.length === 0) return <div>No leasing applications found.</div>;
-
-    return (
-        <div>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Leasing Applications</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {apps.map(a => (
-                    <div key={a.id} style={{ border: '1px solid hsl(var(--border))', borderRadius: '8px', padding: '1rem', display: 'flex', justifyContent: 'space-between' }}>
+                    {activeTab === 'profile' && (
                         <div>
-                            <div style={{ fontWeight: 600 }}>Car ID: {a.car_id}</div>
-                            <div style={{ fontSize: '0.875rem' }}>Monthly: ${a.monthly_payment} for {a.term_months} mos</div>
-                            <div style={{ color: 'hsl(var(--muted-foreground))', fontSize: '0.875rem' }}>Down Payment: ${a.down_payment}</div>
-                        </div>
-                        <div style={{ fontWeight: 600, color: a.status === 'Pending' ? 'orange' : 'inherit' }}>{a.status}</div>
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
+                            <h2 className={styles.sectionTitle}>{t('dashboard.tab.profile')}</h2>
+                            <div className={styles.formGroup}>
+                                <label>Full Name</label>
+                                <input className={styles.input} value={profileData.fullName} onChange={e => setProfileData({...profileData, fullName: e.target.value})} />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Email (disabled)</label>
+                                <input className={styles.input} disabled value={profileData.email} />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label>Phone</label>
+                                <input className={styles.input} value={profileData.phone} onChange={e => setProfileData({...profileData, phone: e.target.value})} />
+                            </div>
+                            <Button className="mt-4">Сохранить изменения</Button>
 
-function FavoritesSection({ token }: { token: string }) {
-    const [favorites, setFavorites] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
-    const router = useRouter();
-
-    useEffect(() => {
-        api.get('/favorites')
-            .then(res => setFavorites(res.data))
-            .finally(() => setLoading(false));
-    }, [token]);
-
-    const handleRemove = async (carId: number) => {
-        try {
-            await api.delete(`/favorites/${carId}`);
-            setFavorites(favorites.filter(f => f.car_id !== carId));
-        } catch(err) {
-            alert('Failed to remove favorite');
-        }
-    };
-
-    if (loading) return <div>Loading favorites...</div>;
-    if (favorites.length === 0) return <div>No favorites yet. Go browse cars!</div>;
-
-    return (
-        <div>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>My Favorites</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem' }}>
-                {favorites.map(f => (
-                    <div key={f.id} style={{ border: '1px solid hsl(var(--border))', borderRadius: '12px', overflow: 'hidden' }}>
-                        <div style={{ padding: '1rem' }}>
-                            <div style={{ fontWeight: 600, fontSize: '1.125rem' }}>Car ID: {f.car_id}</div>
-                            <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-                                <Button size="sm" style={{ flex: 1 }} onClick={() => router.push(`/cars/${f.car_id}`)}>View & Book</Button>
-                                <Button variant="outline" size="sm" onClick={() => handleRemove(f.car_id)}>Remove</Button>
+                            <div className="mt-12 border-t border-white/10 pt-8">
+                                <h2 className={styles.sectionTitle}>Change Password</h2>
+                                <div className={styles.formGroup}>
+                                    <label>Current Password</label>
+                                    <input type="password" className={styles.input} />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>New Password</label>
+                                    <input type="password" className={styles.input} />
+                                </div>
+                                <div className={styles.formGroup}>
+                                    <label>Confirm New Password</label>
+                                    <input type="password" className={styles.input} />
+                                </div>
+                                <Button className="mt-4">Изменить пароль</Button>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    )}
+
+                    {activeTab === 'settings' && (
+                        <div>
+                            <h2 className={styles.sectionTitle}>{t('dashboard.tab.settings')}</h2>
+                            
+                            <div className={styles.settingsGroup}>
+                                <h3>Язык интерфейса</h3>
+                                <div className={styles.toggleButtons}>
+                                    <button className={`${styles.toggleBtn} ${language === 'kz' ? styles.toggleActive : ''}`} onClick={() => setLanguage('kz')}>KZ</button>
+                                    <button className={`${styles.toggleBtn} ${language === 'ru' ? styles.toggleActive : ''}`} onClick={() => setLanguage('ru')}>RU</button>
+                                    <button className={`${styles.toggleBtn} ${language === 'en' ? styles.toggleActive : ''}`} onClick={() => setLanguage('en')}>EN</button>
+                                </div>
+                            </div>
+
+                            <div className={styles.settingsGroup}>
+                                <h3>Валюта</h3>
+                                <div className={styles.toggleButtons}>
+                                    <button className={`${styles.toggleBtn} ${currency === 'KZT' ? styles.toggleActive : ''}`} onClick={() => setCurrency('KZT')}>₸</button>
+                                    <button className={`${styles.toggleBtn} ${currency === 'USD' ? styles.toggleActive : ''}`} onClick={() => setCurrency('USD')}>$</button>
+                                    <button className={`${styles.toggleBtn} ${currency === 'RUB' ? styles.toggleActive : ''}`} onClick={() => setCurrency('RUB')}>₽</button>
+                                </div>
+                            </div>
+
+                            <div className={styles.settingsGroup}>
+                                <h3>Уведомления</h3>
+                                <label className={styles.checkboxLabel}>
+                                    <input type="checkbox" defaultChecked /> Email уведомления
+                                </label>
+                                <label className={styles.checkboxLabel}>
+                                    <input type="checkbox" defaultChecked /> SMS уведомления
+                                </label>
+                            </div>
+
+                            <div className="mt-12 border-t border-red-500/20 pt-8">
+                                <h3 className="text-red-400 font-medium mb-4">Danger Zone</h3>
+                                <div className="flex flex-col gap-4 items-start">
+                                    <button className={styles.dangerOutlineBtn} onClick={handleLogout}>
+                                        <LogOut className="w-4 h-4 mr-2 inline" />
+                                        {t('dashboard.logout')}
+                                    </button>
+                                    <button className={styles.dangerBtn} onClick={handleDeleteAccount}>
+                                        <AlertTriangle className="w-4 h-4 mr-2 inline" />
+                                        {t('dashboard.delete')}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
 }
-
-function SettingsSection() {
-    return (
-        <div style={{ maxWidth: '400px' }}>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>Settings</h2>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                <div>
-                    <label style={{ fontSize: '0.875rem', fontWeight: 500, display: 'block', marginBottom: '0.5rem' }}>Language Preference</label>
-                    <select style={inputStyle}>
-                        <option>English (EN)</option>
-                        <option>Russian (RU)</option>
-                        <option>Arabic (AR)</option>
-                    </select>
-                </div>
-                <div>
-                    <label style={{ fontSize: '0.875rem', fontWeight: 500, display: 'block', marginBottom: '0.5rem' }}>Notification Preferences</label>
-                    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                        <label><input type="checkbox" defaultChecked /> Email</label>
-                        <label><input type="checkbox" defaultChecked /> SMS</label>
-                    </div>
-                </div>
-                <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid hsl(var(--border))' }}>
-                    <h3 style={{ fontSize: '1.25rem', color: 'hsl(var(--destructive))', marginBottom: '0.5rem' }}>Danger Zone</h3>
-                    <p style={{ fontSize: '0.875rem', color: 'hsl(var(--muted-foreground))', marginBottom: '1rem' }}>Once you delete your account, there is no going back. Please be certain.</p>
-                    <Button variant="outline" style={{ color: 'hsl(var(--destructive))', borderColor: 'hsl(var(--destructive))' }} onClick={() => alert('Feature disabled for demo.')}>Delete Account</Button>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-const inputStyle = {
-    padding: '0.75rem', borderRadius: '8px', border: '1px solid hsl(var(--border))', background: 'hsl(var(--background))', width: '100%'
-};

@@ -1,4 +1,20 @@
 {
+  "dashboard": {
+    "title": "Менің аккаунтым",
+    "tab.history": "Сатып алу тарихы",
+    "tab.profile": "Профиль",
+    "tab.settings": "Баптаулар",
+    "empty": "Сатып алулар жоқ",
+    "empty.btn": "Көліктерді көру",
+    "greeting": "Сәлем",
+    "status.active": "Белсенді",
+    "status.completed": "Аяқталды",
+    "status.cancelled": "Болдырылмады",
+    "type.rent": "Жалдау",
+    "type.leasing": "Лизинг",
+    "logout": "Шығу",
+    "delete": "Аккаунтты жою"
+  },
   "leasing_page": {
     "title1": "Икемді",
     "title2": "Жалға алу және Лизинг",
@@ -130,7 +146,8 @@
       "title": "Ұқсас көліктер",
       "subtitle": "Ұқсас:",
       "found": "{{count}} нұсқа табылды",
-      "btn": "Ұқсас көліктер ({{count}} нұсқа)"
+      "btn": "Ұқсас көліктер ({{count}} нұсқа)",
+      "match": "✓ Бағалауға сәйкес келеді"
     },
     "analyzing": "Талдауда...",
     "per_day": "/күн",

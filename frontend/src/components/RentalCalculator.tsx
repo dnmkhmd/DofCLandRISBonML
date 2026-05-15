@@ -6,6 +6,8 @@ import { useTranslation } from '@/context/LanguageContext';
 import { useCurrency } from '@/context/CurrencyContext';
 import Button from './ui/Button';
 import styles from '../app/cars/page.module.css';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 import { Car } from '@/utils/api';
 
@@ -15,6 +17,8 @@ interface RentalCalculatorProps {
 }
 
 export default function RentalCalculator({ car, onClose }: RentalCalculatorProps) {
+    const router = useRouter();
+    const { user } = useAuth();
     const { t } = useTranslation();
     const [activeTab, setActiveTab] = useState<'rent' | 'lease'>('rent');
     
@@ -252,7 +256,41 @@ export default function RentalCalculator({ car, onClose }: RentalCalculatorProps
                 )}
 
                 <div style={{ marginTop: '2rem' }}>
-                    <Button style={{ width: '100%' }} size="lg" disabled={loading}>
+                    <Button style={{ width: '100%' }} size="lg" disabled={loading} onClick={async () => {
+                        if (!user) {
+                            router.push('/login');
+                            return;
+                        }
+                        setLoading(true);
+                        try {
+                            const totalPrice = activeTab === 'rent' ? rentResult?.total_cost : leaseResult?.totalCost;
+                            let end_date_calc = dates.end;
+                            if (activeTab === 'lease') {
+                                const date = new Date();
+                                date.setMonth(date.getMonth() + leaseParams.term);
+                                end_date_calc = date.toISOString().split('T')[0];
+                            }
+                            await api.post('/bookings', {
+                                user_id: user.id,
+                                car_id: car.id,
+                                car_brand: car.brand,
+                                car_model: car.model,
+                                car_photo: car.photos && car.photos.length > 0 ? car.photos[0] : "",
+                                booking_type: activeTab,
+                                start_date: activeTab === 'rent' ? dates.start : new Date().toISOString().split('T')[0],
+                                end_date: end_date_calc,
+                                total_price: totalPrice
+                            });
+                            alert('Бронирование добавлено!');
+                            onClose();
+                            router.push('/dashboard?tab=history');
+                        } catch (error) {
+                            console.error(error);
+                            alert('Failed to book car');
+                        } finally {
+                            setLoading(false);
+                        }
+                    }}>
                         {loading ? t('calc.processing') : activeTab === 'rent' ? t('calc.confirm_rent') : t('calc.apply_lease')}
                     </Button>
                 </div>

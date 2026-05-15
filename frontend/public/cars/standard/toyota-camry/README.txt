@@ -1,25 +1,4 @@
-Photos for toyota-camry (6 variants, 18 total files):
-Variant 1:
-  - camry-1-exterior-1.jpg
-  - camry-1-exterior-2.jpg
-  - camry-1-interior.jpg
-Variant 2:
-  - camry-2-exterior-1.jpg
-  - camry-2-exterior-2.jpg
-  - camry-2-interior.jpg
-Variant 3:
-  - camry-3-exterior-1.jpg
-  - camry-3-exterior-2.jpg
-  - camry-3-interior.jpg
-Variant 4:
-  - camry-4-exterior-1.jpg
-  - camry-4-exterior-2.jpg
-  - camry-4-interior.jpg
-Variant 5:
-  - camry-5-exterior-1.jpg
-  - camry-5-exterior-2.jpg
-  - camry-5-interior.jpg
-Variant 6:
-  - camry-6-exterior-1.jpg
-  - camry-6-exterior-2.jpg
-  - camry-6-interior.jpg
+Add 3 photos here:
+ - exterior-1.jpg (front/side view)
+ - exterior-2.jpg (rear/side view)
+ - interior.jpg (interior view)

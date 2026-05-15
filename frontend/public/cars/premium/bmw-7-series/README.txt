@@ -1,25 +1,4 @@
-Photos for bmw-7-series (6 variants, 18 total files):
-Variant 1:
-  - bmw7-1-exterior-1.jpg
-  - bmw7-1-exterior-2.jpg
-  - bmw7-1-interior.jpg
-Variant 2:
-  - bmw7-2-exterior-1.jpg
-  - bmw7-2-exterior-2.jpg
-  - bmw7-2-interior.jpg
-Variant 3:
-  - bmw7-3-exterior-1.jpg
-  - bmw7-3-exterior-2.jpg
-  - bmw7-3-interior.jpg
-Variant 4:
-  - bmw7-4-exterior-1.jpg
-  - bmw7-4-exterior-2.jpg
-  - bmw7-4-interior.jpg
-Variant 5:
-  - bmw7-5-exterior-1.jpg
-  - bmw7-5-exterior-2.jpg
-  - bmw7-5-interior.jpg
-Variant 6:
-  - bmw7-6-exterior-1.jpg
-  - bmw7-6-exterior-2.jpg
-  - bmw7-6-interior.jpg
+Add 3 photos here:
+ - exterior-1.jpg (front/side view)
+ - exterior-2.jpg (rear/side view)
+ - interior.jpg (interior view)

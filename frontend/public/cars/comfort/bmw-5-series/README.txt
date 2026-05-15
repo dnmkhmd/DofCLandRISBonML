@@ -1,25 +1,4 @@
-Photos for bmw-5-series (6 variants, 18 total files):
-Variant 1:
-  - bmw5-1-exterior-1.jpg
-  - bmw5-1-exterior-2.jpg
-  - bmw5-1-interior.jpg
-Variant 2:
-  - bmw5-2-exterior-1.jpg
-  - bmw5-2-exterior-2.jpg
-  - bmw5-2-interior.jpg
-Variant 3:
-  - bmw5-3-exterior-1.jpg
-  - bmw5-3-exterior-2.jpg
-  - bmw5-3-interior.jpg
-Variant 4:
-  - bmw5-4-exterior-1.jpg
-  - bmw5-4-exterior-2.jpg
-  - bmw5-4-interior.jpg
-Variant 5:
-  - bmw5-5-exterior-1.jpg
-  - bmw5-5-exterior-2.jpg
-  - bmw5-5-interior.jpg
-Variant 6:
-  - bmw5-6-exterior-1.jpg
-  - bmw5-6-exterior-2.jpg
-  - bmw5-6-interior.jpg
+Add 3 photos here:
+ - exterior-1.jpg (front/side view)
+ - exterior-2.jpg (rear/side view)
+ - interior.jpg (interior view)

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import api from '@/utils/api';
@@ -39,6 +39,14 @@ export default function LoginPage() {
     const [isHovered, setIsHovered] = useState(false);
     useEffect(() => setMounted(true), []);
 
+    const handleIdentifierChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setIdentifier(e.target.value);
+    }, []);
+
+    const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    }, []);
+
     const validate = () => {
         if (!identifier) return t('auth.errors.identifier_required');
         if (!password) return t('auth.errors.password_required');
@@ -58,28 +66,23 @@ export default function LoginPage() {
 
         setLoading(true);
 
-        if (identifier === 'admin' && password === 'admin') {
-            localStorage.setItem('isAdmin', 'true');
-            router.push('/admin/dashboard');
-            return;
-        }
-
         try {
-            const formData = new URLSearchParams();
-            formData.append('username', identifier);
-            formData.append('password', password);
-
-            const res = await api.post(`/auth/login`, formData, {
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            const res = await api.post('/auth/login', {
+                email: identifier,
+                password: password
             });
-            const token = res.data.access_token;
-
-            const userRes = await api.get(`/auth/me`);
-
-            login(token, userRes.data);
-            router.push('/dashboard');
+            if (res.data.success) {
+                login(res.data.token, res.data.user);
+                
+                // Redirect based on role
+                if (res.data.role === 'admin') {
+                    router.push('/');
+                } else {
+                    router.push('/dashboard');
+                }
+            }
         } catch (err: any) {
-            setError(err.response?.data?.detail || t('auth.errors.invalid_credentials'));
+            setError(err.response?.data?.detail || 'Login failed');
         } finally {
             setLoading(false);
         }
@@ -146,9 +149,9 @@ export default function LoginPage() {
                                 type="text"
                                 placeholder={t('auth.placeholder_email')}
                                 value={identifier}
-                                onChange={(e) => setIdentifier(e.target.value)}
+                                onChange={handleIdentifierChange}
                                 className={cn(inputBase, "!pl-12 pr-4")}
-                                autoComplete="username"
+                                autoComplete="email"
                             />
                         </div>
                     </div>
@@ -175,7 +178,7 @@ export default function LoginPage() {
                                 type={showPassword ? "text" : "password"}
                                 placeholder={t('auth.placeholder_password')}
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={handlePasswordChange}
                                 className={cn(inputBase, "!pl-12 pr-12")}
                                 autoComplete="current-password"
                             />

@@ -1,0 +1,31 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "full_name": "Иван Иванов",
+      "email": "name@example.kz",
+      "phone": "+7 777 777 77 77",
+      "password_hash": "2fbae4f1e82599d1d270ce3fb0d5c707a4a94fea35a7440affd24d98e2e6b67d",
+      "created_at": "2026-05-15T02:15:10.530558",
+      "role": "user",
+      "is_active": true,
+      "bookings": [
+        {
+          "id": 1778795625,
+          "car_id": 13,
+          "car_brand": "Kia",
+          "car_model": "K5",
+          "car_photo": "",
+          "booking_type": "rent",
+          "start_date": "2026-05-14",
+          "end_date": "2026-05-15",
+          "total_price": 21030.0,
+          "status": "active",
+          "created_at": "2026-05-15T02:53:45.677183"
+        }
+      ],
+      "favorites": [],
+      "last_login": "2026-05-15T02:53:38.956450"
+    }
+  ]
+}

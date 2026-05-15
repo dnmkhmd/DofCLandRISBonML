@@ -1,25 +1,4 @@
-Photos for mercedes-s-class (6 variants, 18 total files):
-Variant 1:
-  - merc-s-1-exterior-1.jpg
-  - merc-s-1-exterior-2.jpg
-  - merc-s-1-interior.jpg
-Variant 2:
-  - merc-s-2-exterior-1.jpg
-  - merc-s-2-exterior-2.jpg
-  - merc-s-2-interior.jpg
-Variant 3:
-  - merc-s-3-exterior-1.jpg
-  - merc-s-3-exterior-2.jpg
-  - merc-s-3-interior.jpg
-Variant 4:
-  - merc-s-4-exterior-1.jpg
-  - merc-s-4-exterior-2.jpg
-  - merc-s-4-interior.jpg
-Variant 5:
-  - merc-s-5-exterior-1.jpg
-  - merc-s-5-exterior-2.jpg
-  - merc-s-5-interior.jpg
-Variant 6:
-  - merc-s-6-exterior-1.jpg
-  - merc-s-6-exterior-2.jpg
-  - merc-s-6-interior.jpg
+Add 3 photos here:
+ - exterior-1.jpg (front/side view)
+ - exterior-2.jpg (rear/side view)
+ - interior.jpg (interior view)

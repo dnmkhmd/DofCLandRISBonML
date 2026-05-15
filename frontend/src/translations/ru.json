@@ -1,4 +1,20 @@
 {
+  "dashboard": {
+    "title": "Мой аккаунт",
+    "tab.history": "История покупок",
+    "tab.profile": "Профиль",
+    "tab.settings": "Настройки",
+    "empty": "У вас пока нет покупок",
+    "empty.btn": "Посмотреть автомобили",
+    "greeting": "Привет",
+    "status.active": "Активно",
+    "status.completed": "Завершено",
+    "status.cancelled": "Отменено",
+    "type.rent": "Аренда",
+    "type.leasing": "Лизинг",
+    "logout": "Выйти",
+    "delete": "Удалить аккаунт"
+  },
   "leasing_page": {
     "title1": "Гибкая",
     "title2": "Аренда и Лизинг",
@@ -130,7 +146,8 @@
       "title": "Похожие автомобили",
       "subtitle": "Похожие на",
       "found": "Найдено {{count}} вариантов",
-      "btn": "Похожие авто ({{count}} вариантов)"
+      "btn": "Похожие авто ({{count}} вариантов)",
+      "match": "✓ Соответствует оценке"
     },
     "analyzing": "Анализирую...",
     "per_day": "/день",

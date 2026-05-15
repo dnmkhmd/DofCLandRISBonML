@@ -1,25 +1,4 @@
-Photos for kia-k5 (6 variants, 18 total files):
-Variant 1:
-  - k5-1-exterior-1.jpg
-  - k5-1-exterior-2.jpg
-  - k5-1-interior.jpg
-Variant 2:
-  - k5-2-exterior-1.jpg
-  - k5-2-exterior-2.jpg
-  - k5-2-interior.jpg
-Variant 3:
-  - k5-3-exterior-1.jpg
-  - k5-3-exterior-2.jpg
-  - k5-3-interior.jpg
-Variant 4:
-  - k5-4-exterior-1.jpg
-  - k5-4-exterior-2.jpg
-  - k5-4-interior.jpg
-Variant 5:
-  - k5-5-exterior-1.jpg
-  - k5-5-exterior-2.jpg
-  - k5-5-interior.jpg
-Variant 6:
-  - k5-6-exterior-1.jpg
-  - k5-6-exterior-2.jpg
-  - k5-6-interior.jpg
+Add 3 photos here:
+ - exterior-1.jpg (front/side view)
+ - exterior-2.jpg (rear/side view)
+ - interior.jpg (interior view)

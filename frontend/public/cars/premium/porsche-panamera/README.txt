@@ -1,25 +1,4 @@
-Photos for porsche-panamera (6 variants, 18 total files):
-Variant 1:
-  - porsche-pan-1-exterior-1.jpg
-  - porsche-pan-1-exterior-2.jpg
-  - porsche-pan-1-interior.jpg
-Variant 2:
-  - porsche-pan-2-exterior-1.jpg
-  - porsche-pan-2-exterior-2.jpg
-  - porsche-pan-2-interior.jpg
-Variant 3:
-  - porsche-pan-3-exterior-1.jpg
-  - porsche-pan-3-exterior-2.jpg
-  - porsche-pan-3-interior.jpg
-Variant 4:
-  - porsche-pan-4-exterior-1.jpg
-  - porsche-pan-4-exterior-2.jpg
-  - porsche-pan-4-interior.jpg
-Variant 5:
-  - porsche-pan-5-exterior-1.jpg
-  - porsche-pan-5-exterior-2.jpg
-  - porsche-pan-5-interior.jpg
-Variant 6:
-  - porsche-pan-6-exterior-1.jpg
-  - porsche-pan-6-exterior-2.jpg
-  - porsche-pan-6-interior.jpg
+Add 3 photos here:
+ - exterior-1.jpg (front/side view)
+ - exterior-2.jpg (rear/side view)
+ - interior.jpg (interior view)

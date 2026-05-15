@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, SetStateAction } from 'react';
+import { useState, useEffect, useCallback, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
 import api from '@/utils/api';
 import Link from 'next/link';
@@ -35,6 +35,48 @@ interface FieldErrors {
     confirmPassword?: string;
 }
 
+const inputBase = "w-full h-[54px] bg-slate-950/60 border border-white/10 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500/50 transition-all font-medium text-[15px] backdrop-blur-sm";
+
+const FormGroup = ({ id, label, icon: Icon, type, value, onChange, onBlur, placeholder, rightIcon, errorState, autoComplete }: any) => {
+    return (
+        <div className="flex flex-col gap-2">
+            <label htmlFor={id} className="text-[14px] font-medium text-slate-300 ml-1">
+                {label}
+            </label>
+            <div className="relative group">
+                <div className={cn(
+                    "absolute left-4 top-1/2 -translate-y-1/2 transition-colors pointer-events-none z-10 flex items-center justify-center",
+                    errorState ? "text-red-400" : "text-slate-500 group-focus-within:text-purple-400"
+                )}>
+                    <Icon className="w-5 h-5" />
+                </div>
+                <input
+                    id={id}
+                    type={type}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                    onBlur={onBlur}
+                    className={cn(
+                        inputBase,
+                        "!pl-12",
+                        rightIcon ? "pr-12" : "pr-4",
+                        errorState && "border-red-500/50 focus:border-red-500 focus:ring-red-500/20"
+                    )}
+                    autoComplete={autoComplete}
+                />
+                {rightIcon}
+            </div>
+            {errorState && (
+                <p className="flex items-center gap-1.5 text-xs font-semibold text-red-400 ml-1 mt-0.5">
+                    <AlertCircle className="w-[14px] h-[14px]" />
+                    {errorState}
+                </p>
+            )}
+        </div>
+    );
+};
+
 export default function RegisterPage() {
     const { t } = useTranslation();
     const [fullName, setFullName] = useState('');
@@ -58,6 +100,26 @@ export default function RegisterPage() {
     const [mounted, setMounted] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
     useEffect(() => setMounted(true), []);
+
+    const handleFullNameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setFullName(e.target.value);
+    }, []);
+
+    const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+    }, []);
+
+    const handlePhoneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setPhone(e.target.value);
+    }, []);
+
+    const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setPassword(e.target.value);
+    }, []);
+
+    const handleConfirmPasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        setConfirmPassword(e.target.value);
+    }, []);
 
     // Password strength logic
     const calculateStrength = (pass: string) => {
@@ -138,75 +200,24 @@ export default function RegisterPage() {
         setLoading(true);
 
         try {
-            await api.post(`/auth/register`, {
-                email,
+            const res = await api.post('/auth/register', {
                 full_name: fullName,
-                phone,
-                password,
+                email: email,
+                phone: phone,
+                password: password
             });
-            setSuccess(true);
-            setTimeout(() => router.push('/login'), 1000);
+            if (res.data.success) {
+                // Registration successful, redirect to login
+                router.push('/login');
+            }
         } catch (err: any) {
-            setGlobalError(err.response?.data?.detail || t('auth.errors.reg_failed'));
+            setGlobalError(err.response?.data?.detail || 'Registration failed');
         } finally {
             setLoading(false);
         }
     };
 
     if (!mounted) return null;
-
-    const inputBase = "w-full h-[54px] bg-slate-950/60 border border-white/10 rounded-xl text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-500/50 transition-all font-medium text-[15px] backdrop-blur-sm";
-
-    // Components mapping to handle shared UI wrapper
-    const FormGroup = ({ id, label, icon: Icon, type, value, setValue, placeholder, rightIcon }: any) => {
-        const errorState = touched[id] && fieldErrors[id as keyof FieldErrors];
-
-        return (
-            <div className="flex flex-col gap-2">
-                <label htmlFor={id} className="text-[14px] font-medium text-slate-300 ml-1">
-                    {label}
-                </label>
-                <div className="relative group">
-                    <div className={cn(
-                        "absolute left-4 top-1/2 -translate-y-1/2 transition-colors pointer-events-none z-10 flex items-center justify-center",
-                        errorState ? "text-red-400" : "text-slate-500 group-focus-within:text-purple-400"
-                    )}>
-                        <Icon className="w-5 h-5" />
-                    </div>
-                    <input
-                        id={id}
-                        type={type}
-                        placeholder={placeholder}
-                        value={value}
-                        onChange={(e) => {
-                            setValue(e.target.value);
-                            if (touched[id]) {
-                                setFieldErrors(prev => ({ ...prev, [id]: validateField(id, e.target.value) }));
-                            }
-                            if (id === 'password' && touched.confirmPassword) {
-                                setFieldErrors(prev => ({ ...prev, confirmPassword: validateField('confirmPassword', confirmPassword) }));
-                            }
-                        }}
-                        onBlur={(e) => handleBlur(id as keyof FieldErrors, e.target.value)}
-                        className={cn(
-                            inputBase,
-                            "!pl-12",
-                            rightIcon ? "pr-12" : "pr-4",
-                            errorState && "border-red-500/50 focus:border-red-500 focus:ring-red-500/20"
-                        )}
-                        autoComplete="off"
-                    />
-                    {rightIcon}
-                </div>
-                {errorState && (
-                    <p className="flex items-center gap-1.5 text-xs font-semibold text-red-400 ml-1 mt-0.5">
-                        <AlertCircle className="w-[14px] h-[14px]" />
-                        {errorState}
-                    </p>
-                )}
-            </div>
-        );
-    };
 
     return (
         <AuthLayout>
@@ -257,8 +268,11 @@ export default function RegisterPage() {
                         icon={User}
                         type="text"
                         value={fullName}
-                        setValue={setFullName}
+                        onChange={handleFullNameChange}
+                        onBlur={(e: any) => handleBlur('fullName', e.target.value)}
                         placeholder={t('auth.placeholder_name')}
+                        errorState={touched.fullName && fieldErrors.fullName}
+                        autoComplete="name"
                     />
 
                     <FormGroup
@@ -267,8 +281,11 @@ export default function RegisterPage() {
                         icon={Mail}
                         type="email"
                         value={email}
-                        setValue={setEmail}
+                        onChange={handleEmailChange}
+                        onBlur={(e: any) => handleBlur('email', e.target.value)}
                         placeholder={t('auth.placeholder_email')}
+                        errorState={touched.email && fieldErrors.email}
+                        autoComplete="email"
                     />
 
                     <FormGroup
@@ -277,8 +294,11 @@ export default function RegisterPage() {
                         icon={Phone}
                         type="tel"
                         value={phone}
-                        setValue={setPhone}
+                        onChange={handlePhoneChange}
+                        onBlur={(e: any) => handleBlur('phone', e.target.value)}
                         placeholder={t('auth.placeholder_phone')}
+                        errorState={touched.phone && fieldErrors.phone}
+                        autoComplete="tel"
                     />
 
                     <div className="flex flex-col gap-1">
@@ -288,8 +308,11 @@ export default function RegisterPage() {
                             icon={Lock}
                             type={showPassword ? "text" : "password"}
                             value={password}
-                            setValue={setPassword}
+                            onChange={handlePasswordChange}
+                            onBlur={(e: any) => handleBlur('password', e.target.value)}
                             placeholder={t('auth.placeholder_strong_password')}
+                            errorState={touched.password && fieldErrors.password}
+                            autoComplete="new-password"
                             rightIcon={
                                 <button
                                     type="button"
@@ -330,8 +353,11 @@ export default function RegisterPage() {
                         icon={Lock}
                         type={showConfirm ? "text" : "password"}
                         value={confirmPassword}
-                        setValue={setConfirmPassword}
+                        onChange={handleConfirmPasswordChange}
+                        onBlur={(e: any) => handleBlur('confirmPassword', e.target.value)}
                         placeholder={t('auth.placeholder_repeat_password')}
+                        errorState={touched.confirmPassword && fieldErrors.confirmPassword}
+                        autoComplete="new-password"
                         rightIcon={
                             <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-1 z-10">
                                 {touched.confirmPassword && confirmPassword && (

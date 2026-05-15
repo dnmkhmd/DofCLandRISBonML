@@ -464,7 +464,7 @@ export default function PredictPage() {
                                             {fetchingSimilar ? (
                                                 <>
                                                     <Loader2 size={18} className="animate-spin" />
-                                                    <span>{t('similar_discovery.loading', 'Searching...')}</span>
+                                                    <span>{t('predict.analyzing', 'Searching...')}</span>
                                                 </>
                                             ) : (
                                                 <>
@@ -538,7 +538,7 @@ export default function PredictPage() {
                                             <div className={styles.cardContent}>
                                                 {isMatch && (
                                                     <div className={styles.matchBadge}>
-                                                        {t('similar_discovery.match_badge', '✓ Matches estimate')}
+                                                        {t('predict.similar.match', '✓ Matches estimate')}
                                                     </div>
                                                 )}
                                                 <h3 className={styles.cardTitle}>{car.brand} {car.model}</h3>
@@ -558,13 +558,13 @@ export default function PredictPage() {
                                                         onClick={() => handleCarAction(car.id)}
                                                         className={styles.btnDetails}
                                                     >
-                                                        {t('similar_discovery.details', 'Details')}
+                                                        {t('car.info')}
                                                     </button>
                                                     <button 
                                                         onClick={() => handleCarAction(car.id)}
                                                         className={styles.btnBook}
                                                     >
-                                                        {t('similar_discovery.book', 'Book')}
+                                                        {t('car.rent')}
                                                     </button>
                                                 </div>
                                             </div>
